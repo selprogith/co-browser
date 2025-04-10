@@ -20,13 +20,12 @@ def navigate():
         response = requests.get(url, timeout=10)
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Estrai solo il testo leggibile (senza HTML)
+        # Estrai tutto il testo leggibile dalla pagina
         text = soup.get_text(separator=' ', strip=True)
 
-        # Restituisci solo i primi 1000 caratteri per non appesantire
         return jsonify({
             "url": url,
-            "content": text[:1000] + ("..." if len(text) > 1000 else "")
+            "content": text
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
